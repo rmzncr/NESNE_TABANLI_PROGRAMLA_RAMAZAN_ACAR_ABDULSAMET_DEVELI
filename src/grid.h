@@ -9,10 +9,10 @@ class Grid{
         void Initialize();
         void Print();
         void Draw();
+        bool IsCellOutside(int row,int column);
         int grid[20][10];
 
     private:
-        vector<Color> GetCellColors();
         int numRows;//satır sayısı
         int numCols;//sütun sayısı
         int cellSize;// hücre boyutu
