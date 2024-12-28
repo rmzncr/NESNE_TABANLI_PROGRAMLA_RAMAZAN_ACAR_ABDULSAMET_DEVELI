@@ -50,13 +50,16 @@ void Game::HandleInput()
     case KEY_DOWN:
         MoveBlockDown();
         break;
+    case KEY_UP://bloğun dönüşünü sağlar
+        RotateBlock();
+        break;
     }
 }
 //sola hareket etme
 void Game::MoveBLockLeft()
 {
     currentBlock.Move(-1,0);
-    if(IsBlockOutside())//dışına çıktığında tekrar sağa hareket etmesi için
+    if(IsBlockOutside()|| BlocksFits()==false)//dışına çıktığında tekrar sağa hareket etmesi için
     {
         currentBlock.Move(1,0);
     }
@@ -65,7 +68,7 @@ void Game::MoveBLockLeft()
 void Game::MoveBLockRight()
 {
     currentBlock.Move(1,0);
-    if(IsBlockOutside())
+    if(IsBlockOutside()|| BlocksFits()==false)
     {
         currentBlock.Move(-1,0);
     }
@@ -74,9 +77,10 @@ void Game::MoveBLockRight()
 void Game::MoveBlockDown()
 {
     currentBlock.Move(0,1);
-    if(IsBlockOutside())
+    if(IsBlockOutside()|| BlocksFits()==false)//dışına çıktığında tekrar yukarı hareket etmesi için
     {
         currentBlock.Move(0,-1);
+        LockBlock();
     }
 }
 
@@ -92,4 +96,39 @@ bool Game::IsBlockOutside()
         }
     }
     return false;
+}
+
+void Game::RotateBlock()//bloğun dönme durumunu değiştirir
+{
+    currentBlock.Rotate();
+    if(IsBlockOutside()|| BlocksFits()==false)
+    {
+        currentBlock.UndoRotaion();//bloğun dışarı çıkması durumunda eski haline getirir
+    }
+
+}
+//bloklar en aşağı indiğinde sabitlenmesi için kullanılır
+void Game::LockBlock()
+{
+    vector<Position> tiles= currentBlock.GetCellPositions();
+    for(Position item:tiles)
+    {
+        grid.grid[item.row][item.column]=currentBlock.id;
+    }
+    currentBlock=nextBlock;
+    nextBlock=GetRandomBlock();
+    grid.ClearFullRows();
+}
+
+bool Game::BlocksFits()
+{
+    vector<Position> tiles=currentBlock.GetCellPositions();
+    for(Position item:tiles)
+    {
+        if(grid.IsCellEmpty(item.row,item.column)==false)
+        {
+            return false;
+        }
+    }
+    return true;//hücreler boş ise true döndürür
 }

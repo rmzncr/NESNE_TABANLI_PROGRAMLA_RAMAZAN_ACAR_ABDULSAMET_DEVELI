@@ -20,5 +20,8 @@ private:
     Block currentBlock;//şu anki blok
     Block nextBlock;//sonraki blok
     bool IsBlockOutside();  
+    void RotateBlock();
+    void LockBlock();
+    bool BlocksFits();//blokların boş bir hücre üstünde olup olmadığını kontrol eder
 
 };

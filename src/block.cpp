@@ -38,3 +38,23 @@ vector<Position> Block::GetCellPositions()//offset işlemi sonrasında blokları
     return movedTiles;
 
 }
+//bloğun dönme durumunu değiştirir
+void Block::Rotate()
+{
+    rotationState++;
+    if(rotationState==(int)cells.size())
+    {
+        rotationState=0;
+    }
+
+
+}
+
+void Block::UndoRotaion()
+{
+    rotationState--;
+    if(rotationState<0)
+    {
+        rotationState=cells.size()-1;
+    }
+}

@@ -11,6 +11,8 @@ class Block
         void Draw();
         void Move(int rows, int columns);
         vector<Position> GetCellPositions();
+        void Rotate();
+        void UndoRotaion();//bloğun dönme durumunu geri alır
         int id;
         map<int,vector<Position>> cells;
 
