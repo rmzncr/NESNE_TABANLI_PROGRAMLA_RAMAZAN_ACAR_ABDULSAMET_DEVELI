@@ -48,7 +48,6 @@ void Game::Draw()
 {
     grid.Draw();
     currentBlock.Draw(11,11);
-    nextBlock.Draw(270,270);
     switch (nextBlock.id)
     {
     case 3:
