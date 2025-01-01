@@ -9,12 +9,13 @@ columnOffset=0;
 }
 
 
-void Block::Draw()
+
+void Block::Draw(int offsetX, int offsetY)//bloğu çizer
 {
     vector<Position> tiles = GetCellPositions();//bloğun dönme durumuna göre hücre pozisyonlarını alır
     for(Position item:tiles)//her hücre için 
     {
-        DrawRectangle(item.column*cellSize+1, item.row*cellSize+1, cellSize-1, cellSize-1, colors[id]);//hücreyi çizer
+        DrawRectangle(item.column*cellSize+offsetX, item.row*cellSize+offsetY, cellSize-1, cellSize-1, colors[id]);//hücreyi çizer
     }
 
 
